@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "229066670945",
+    "project_id": "cwierkacz-9f281",
+    "storage_bucket": "cwierkacz-9f281.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:229066670945:android:6926d270cceac5b783fb20",
+        "android_client_info": {
+          "package_name": "com.example.cwierkaczapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "229066670945-llo71gcolshi6anjvgrtruuanqee596u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzHZAxl9u1aqurAvFUxcUhVg_IoePl0SQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "229066670945-llo71gcolshi6anjvgrtruuanqee596u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
