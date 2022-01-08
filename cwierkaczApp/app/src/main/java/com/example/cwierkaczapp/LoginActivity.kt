@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
@@ -67,7 +68,8 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener { task ->
                     if(!task.isSuccessful) {
                         loginProgressLayout.visibility = View.GONE
-                        Toast.makeText(this@LoginActivity, "Login error: ${task.exception?.localizedMessage}", Toast.LENGTH_SHORT).show()
+                        Log.d("LoginAcitvity", "Login error: ${task.exception?.localizedMessage}")
+                        Toast.makeText(this, "Login error: ${task.exception?.localizedMessage}", Toast.LENGTH_LONG).show()
                     }
                 }
                 .addOnFailureListener { e ->
