@@ -12,18 +12,24 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.cwierkaczapp.fragments.HomeFragment
 import com.example.cwierkaczapp.fragments.MyActivityFragment
 import com.example.cwierkaczapp.fragments.SearchFragment
+import com.example.cwierkaczapp.util.DATA_USERS
+import com.example.cwierkaczapp.util.User
+import com.example.cwierkaczapp.util.loadUrl
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
     private var sectionPagerAdapter:SectionPageAdapter?=null
     private val firebaseAuth = FirebaseAuth.getInstance()
+    private val firebaseDB = FirebaseFirestore.getInstance()
     private val homeFragment = HomeFragment()
     private val searchFragment = SearchFragment()
     private val myActivityFragment = MyActivityFragment()
     private var userId=FirebaseAuth.getInstance().currentUser?.uid
+    private var user: User? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +68,24 @@ class HomeActivity : AppCompatActivity() {
             userId = FirebaseAuth.getInstance().currentUser?.uid
             if(userId ==null){
                 startActivity(LoginActivity.newIntent(this))
+                finish()
+            }
+
+        populate()
+    }
+
+    fun populate() {
+        homeProgressLayout.visibility = View.VISIBLE
+        firebaseDB.collection(DATA_USERS).document(userId!!).get()
+            .addOnSuccessListener { documentSnapshot ->
+                homeProgressLayout.visibility = View.GONE
+                user = documentSnapshot.toObject(User::class.java)
+                user?.imageUrl?.let {
+                    logo.loadUrl(it, R.drawable.logo)
+                }
+            }
+            .addOnFailureListener { e ->
+                e.printStackTrace()
                 finish()
             }
     }
