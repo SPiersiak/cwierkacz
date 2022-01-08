@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CwierkaczApp">
         <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:screenOrientation="portrait"
