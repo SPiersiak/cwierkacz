@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import com.example.cwierkaczapp.R
 
 
-class MyActivityFragment : Fragment() {
+class MyActivityFragment : TwitterFragment() {
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -16,6 +17,10 @@ class MyActivityFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_my_activity, container, false)
+    }
+
+    override fun updateList() {
+
     }
 
 }

@@ -13,6 +13,8 @@ import com.example.cwierkaczapp.R
 import com.example.cwierkaczapp.fragments.HomeFragment
 import com.example.cwierkaczapp.fragments.MyActivityFragment
 import com.example.cwierkaczapp.fragments.SearchFragment
+import com.example.cwierkaczapp.fragments.TwitterFragment
+import com.example.cwierkaczapp.listeners.HomeCallback
 import com.example.cwierkaczapp.util.DATA_USERS
 import com.example.cwierkaczapp.util.User
 import com.example.cwierkaczapp.util.loadUrl
@@ -21,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), HomeCallback {
 
     private var sectionPagerAdapter: SectionPageAdapter? = null
     private val firebaseAuth = FirebaseAuth.getInstance()
@@ -30,7 +32,8 @@ class HomeActivity : AppCompatActivity() {
     private val searchFragment = SearchFragment()
     private val myActivityFragment = MyActivityFragment()
     private var userId = FirebaseAuth.getInstance().currentUser?.uid
-    private var user: User? = null
+    private var user: User?=null
+    private var currentFragment:TwitterFragment=homeFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,16 +62,21 @@ class HomeActivity : AppCompatActivity() {
                         titleBar.visibility = View.VISIBLE
                         titleBar.text = "Home"
                         searchBar.visibility=View.GONE
+                        currentFragment=homeFragment
                     }
                     1 -> {
                         titleBar.visibility = View.GONE
                         searchBar.visibility=View.VISIBLE
+                        currentFragment=searchFragment
+
 
                     }
                     2 -> {
                         titleBar.visibility = View.VISIBLE
                         titleBar.text = "My Activity"
                         searchBar.visibility=View.GONE
+                        currentFragment=myActivityFragment
+
 
                     }
                 }
@@ -101,7 +109,12 @@ class HomeActivity : AppCompatActivity() {
             startActivity(LoginActivity.newIntent(this))
             finish()
         }
+        else {
+            populate()
+        }
+    }
 
+    override fun onUserUpdated() {
         populate()
     }
 
@@ -114,11 +127,19 @@ class HomeActivity : AppCompatActivity() {
                 user?.imageUrl?.let {
                     logo.loadUrl(it, R.drawable.logo)
                 }
+                updateFragmentUser()
             }
             .addOnFailureListener { e ->
                 e.printStackTrace()
                 finish()
             }
+    }
+
+    fun updateFragmentUser() {
+        homeFragment.setUser(user)
+        searchFragment.setUser(user)
+        myActivityFragment.setUser(user)
+        currentFragment.updateList()
     }
 
     inner class SectionPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
