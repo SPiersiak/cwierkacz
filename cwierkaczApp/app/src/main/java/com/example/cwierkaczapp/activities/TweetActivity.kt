@@ -1,4 +1,4 @@
-package com.example.cwierkaczapp
+package com.example.cwierkaczapp.activities
 
 import android.app.Activity
 import android.content.Context
@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.example.cwierkaczapp.R
 import com.example.cwierkaczapp.util.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage

@@ -1,4 +1,4 @@
-package com.example.cwierkaczapp
+package com.example.cwierkaczapp.activities
 
 import android.content.Context
 import android.content.Intent
@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.example.cwierkaczapp.R
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_login.*

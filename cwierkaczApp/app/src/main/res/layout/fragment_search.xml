@@ -12,6 +12,7 @@
         android:layout_height="@dimen/standard_image"
         android:src="@drawable/follow_inactive"
         android:elevation="1dp"
+        android:visibility="gone"
         android:scaleType="centerInside"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
