@@ -1,4 +1,4 @@
-package com.example.cwierkaczapp
+package com.example.cwierkaczapp.activities
 
 import android.content.Context
 import android.content.Intent
@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.Toast
+import com.example.cwierkaczapp.R
 import com.example.cwierkaczapp.util.DATA_USERS
 import com.example.cwierkaczapp.util.User
 import com.google.android.material.textfield.TextInputLayout

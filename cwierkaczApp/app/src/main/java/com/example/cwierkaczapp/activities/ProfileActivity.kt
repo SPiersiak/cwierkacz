@@ -1,4 +1,4 @@
-package com.example.cwierkaczapp
+package com.example.cwierkaczapp.activities
 
 import android.app.Activity
 import android.content.Context
@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.example.cwierkaczapp.R
 import com.example.cwierkaczapp.util.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

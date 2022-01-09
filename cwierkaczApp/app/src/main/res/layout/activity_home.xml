@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".activities.HomeActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -49,6 +49,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="60dp"
             android:layout_marginLeft="60dp"
+            android:visibility="gone"
             app:cardCornerRadius="@dimen/standard_corner_radius">
 
             <EditText
