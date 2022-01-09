@@ -5,15 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cwierkaczapp.R
 import com.example.cwierkaczapp.adapters.TweetListAdapter
 import com.example.cwierkaczapp.listeners.TweetListener
-import com.example.cwierkaczapp.util.DATA_TWEETS
-import com.example.cwierkaczapp.util.DATA_TWEET_HASHTAGS
-import com.example.cwierkaczapp.util.Tweet
-import com.example.cwierkaczapp.util.User
+import com.example.cwierkaczapp.util.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -21,12 +19,6 @@ import kotlinx.android.synthetic.main.fragment_search.*
 class SearchFragment : TwitterFragment() {
 
     private var currentHashtag = ""
-    private var tweetsAdapter: TweetListAdapter? = null
-    private var currentUser: User? = null
-    private val firebaseDB = FirebaseFirestore.getInstance()
-    private val userId = FirebaseAuth.getInstance().currentUser?.uid
-    private val listener:TweetListener?=null
-
     private var hashtagFollowed = false
 
     override fun onCreateView(
@@ -52,6 +44,24 @@ class SearchFragment : TwitterFragment() {
             swipeRefresh.isRefreshing = false
             updateList()
         }
+        followHashtag.setOnClickListener {
+            followHashtag.isClickable = false
+            val followed = currentUser?.followHashtags
+            if(hashtagFollowed) {
+                followed?.remove(currentHashtag)
+            } else {
+                followed?.add(currentHashtag)
+            }
+            firebaseDB.collection(DATA_USERS).document(userId).update(DATA_USER_HASTAGS, followed)
+                .addOnSuccessListener {
+                    callback?.onUserUpdated()
+                    followHashtag.isClickable = true
+                }
+                .addOnFailureListener {e ->
+                    e.printStackTrace()
+                    followHashtag.isClickable = true
+                }
+        }
 
     }
 
@@ -61,7 +71,7 @@ class SearchFragment : TwitterFragment() {
         updateList()
     }
 
-    fun updateList() {
+    override fun updateList() {
         tweetList?.visibility = View.GONE
         firebaseDB.collection(DATA_TWEETS).whereArrayContains(DATA_TWEET_HASHTAGS, currentHashtag)
             .get()
@@ -79,5 +89,17 @@ class SearchFragment : TwitterFragment() {
                 e.printStackTrace()
             }
 
+        updateFollowDrawable()
+
+    }
+    private fun updateFollowDrawable() {
+        hashtagFollowed = currentUser?.followHashtags?.contains(currentHashtag) == true
+        context?.let {
+            if (hashtagFollowed) {
+                followHashtag.setImageDrawable(ContextCompat.getDrawable(it, R.drawable.follow))
+            } else {
+                followHashtag.setImageDrawable(ContextCompat.getDrawable(it, R.drawable.follow_inactive))
+            }
+        }
     }
 }

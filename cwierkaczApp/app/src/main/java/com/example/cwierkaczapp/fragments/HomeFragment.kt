@@ -18,4 +18,9 @@ class HomeFragment : TwitterFragment() {
     }
 
 
+    override fun updateList() {
+
+    }
+
+
 }
