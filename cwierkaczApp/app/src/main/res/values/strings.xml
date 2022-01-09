@@ -8,6 +8,7 @@
     <string name="button_apply">Apply</string>
     <string name="button_signout">Sign out</string>
     <string name="text_signup">No account? Go to Signup</string>
+    <string name="hint_tweet_text">What\'s up</string>
     <string name="text_login">Already have a account? Go to Login</string>
     <string name="hint_search">Search</string>
     <!-- TODO: Remove or change this placeholder text -->

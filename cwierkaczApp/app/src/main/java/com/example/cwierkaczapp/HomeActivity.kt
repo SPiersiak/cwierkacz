@@ -60,6 +60,12 @@ class HomeActivity : AppCompatActivity() {
         logo.setOnClickListener { view->
             startActivity(ProfileActivity.newIntent(this))
         }
+
+        fab.setOnClickListener {
+            startActivity(TweetActivity.newIntent(this, userId, user?.username))
+        }
+
+        homeProgressLayout.setOnTouchListener { v, event -> true }
     }
 
 

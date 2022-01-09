@@ -11,11 +11,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CwierkaczApp">
         <activity
-            android:name=".ProfileActivity"
+            android:name=".TweetActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SignupActivity"
             android:exported="false"
