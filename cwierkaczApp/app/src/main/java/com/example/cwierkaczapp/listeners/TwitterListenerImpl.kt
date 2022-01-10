@@ -1,10 +1,7 @@
 package com.example.cwierkaczapp.listeners
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cwierkaczapp.util.DATA_TWEETS
-import com.example.cwierkaczapp.util.DATA_TWEETS_LIKES
-import com.example.cwierkaczapp.util.Tweet
-import com.example.cwierkaczapp.util.User
+import com.example.cwierkaczapp.util.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -38,6 +35,23 @@ class TwitterListenerImpl(val tweetList: RecyclerView,var user:User?, val callba
     }
 
     override fun onRetweet(tweet: Tweet?) {
-        
+
+        tweet?.let {
+            tweetList.isClickable = false
+            val retweets = tweet.userIds
+            if (retweets?.contains(userId) == true) {
+                retweets?.remove(userId)
+            } else {
+                retweets?.add(userId!!)
+            }
+            firebaseDB.collection(DATA_TWEETS).document(tweet.tweetId!!).update(DATA_TWEET_USER_IDS, retweets)
+                .addOnSuccessListener {
+                    tweetList.isClickable = true
+                    callback?.onRefresh()
+                }
+                .addOnFailureListener {
+                    tweetList.isClickable = true
+                }
+        }
     }
 }
