@@ -1,5 +1,6 @@
 package com.example.cwierkaczapp.listeners
 
+import android.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cwierkaczapp.util.*
 import com.google.firebase.auth.FirebaseAuth
@@ -11,7 +12,57 @@ class TwitterListenerImpl(val tweetList: RecyclerView,var user:User?, val callba
     private val userId=FirebaseAuth.getInstance().currentUser?.uid
 
     override fun onLayoutClick(tweet: Tweet?) {
-
+        tweet?.let {
+            val owner = tweet.userIds?.get(0)
+            if (owner != userId) {
+                if (user?.followUsers?.contains(owner) == true) {
+                    AlertDialog.Builder(tweetList.context)
+                        .setTitle("Unfollow ${tweet.username}?")
+                        .setPositiveButton("yes") { dialog, which ->
+                            tweetList.isClickable = false
+                            var followedUsers = user?.followUsers
+                            if(followedUsers == null) {
+                                followedUsers = arrayListOf()
+                            }
+                            followedUsers?.remove(owner)
+                            firebaseDB.collection(DATA_USERS).document(userId!!).update(DATA_USER_FOLLOW, followedUsers)
+                                .addOnSuccessListener {
+                                    tweetList.isClickable = true
+                                    callback?.onUserUpdated()
+                                }
+                                .addOnFailureListener {
+                                    tweetList.isClickable = true
+                                }
+                        }
+                        .setNegativeButton("cancel") { dialog, which -> }
+                        .show()
+                } else {
+                    AlertDialog.Builder(tweetList.context)
+                        .setTitle("Follow ${tweet.username}?")
+                        .setPositiveButton("yes") { dialog, which ->
+                            tweetList.isClickable = false
+                            var followedUsers = user?.followUsers
+                            if(followedUsers == null) {
+                                followedUsers = arrayListOf()
+                            }
+                            owner?.let {
+                                followedUsers?.add(owner)
+                                firebaseDB.collection(DATA_USERS).document(userId!!)
+                                    .update(DATA_USER_FOLLOW, followedUsers)
+                                    .addOnSuccessListener {
+                                        tweetList.isClickable = true
+                                        callback?.onUserUpdated()
+                                    }
+                                    .addOnFailureListener {
+                                        tweetList.isClickable = true
+                                    }
+                            }
+                        }
+                        .setNegativeButton("cancel") { dialog, which -> }
+                        .show()
+                }
+            }
+        }
     }
 
     override fun onLike(tweet: Tweet?) {

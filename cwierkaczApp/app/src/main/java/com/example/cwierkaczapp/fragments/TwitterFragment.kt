@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import com.example.cwierkaczapp.adapters.TweetListAdapter
 import com.example.cwierkaczapp.listeners.HomeCallback
-import com.example.cwierkaczapp.listeners.TweetListener
+import com.example.cwierkaczapp.listeners.TwitterListenerImpl
 import com.example.cwierkaczapp.util.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -16,9 +16,8 @@ abstract class TwitterFragment : Fragment() {
     protected var currentUser: User? = null
     protected val firebaseDB = FirebaseFirestore.getInstance()
     protected val userId = FirebaseAuth.getInstance().currentUser?.uid
-    protected var listener: TweetListener? = null
+    protected var listener: TwitterListenerImpl? = null
     protected var callback: HomeCallback?=null
-    protected var tweetListener: TweetListener?=null
 
 
     override fun onAttach(context: Context) {
@@ -32,6 +31,7 @@ abstract class TwitterFragment : Fragment() {
 
     fun setUser(user: User?) {
         this.currentUser = user
+        listener?.user=user
     }
 
     abstract fun updateList()
