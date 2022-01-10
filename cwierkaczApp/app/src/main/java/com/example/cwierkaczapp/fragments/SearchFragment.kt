@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cwierkaczapp.R
 import com.example.cwierkaczapp.adapters.TweetListAdapter
 import com.example.cwierkaczapp.listeners.TweetListener
+import com.example.cwierkaczapp.listeners.TwitterListenerImpl
 import com.example.cwierkaczapp.util.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -30,6 +31,8 @@ class SearchFragment : TwitterFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        listener=TwitterListenerImpl(tweetList, currentUser,callback)
 
 
         tweetsAdapter = TweetListAdapter(userId!!, arrayListOf())
