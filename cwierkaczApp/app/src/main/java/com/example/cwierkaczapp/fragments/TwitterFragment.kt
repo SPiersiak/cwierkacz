@@ -18,6 +18,7 @@ abstract class TwitterFragment : Fragment() {
     protected val userId = FirebaseAuth.getInstance().currentUser?.uid
     protected var listener: TweetListener? = null
     protected var callback: HomeCallback?=null
+    protected var tweetListener: TweetListener?=null
 
 
     override fun onAttach(context: Context) {
